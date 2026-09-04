@@ -1,0 +1,61 @@
+# =============================================
+# Git Ignore for Course Registration (PHP/MySQL)
+# =============================================
+
+# 1. Environment & Credentials (ข้อมูลรหัสผ่านและค่า Config ส่วนตัว)
+.env
+.env.local
+.env.*.local
+.env.production
+
+# หากต้องการซ่อนรหัสผ่าน Database บน Production หรือเครื่องส่วนตัว
+# แนะนำให้ใช้ config/database.example.php เป็นตัวอย่าง แล้ว uncomment บรรทัดด้านล่าง:
+# config/database.php
+
+# 2. Dependency Directories (โฟลเดอร์แพ็กเกจที่ติดตั้งเพิ่ม)
+/vendor/
+/node_modules/
+
+# 3. Log & Temporary Files (ไฟล์บันทึกข้อผิดพลาดและไฟล์ชั่วคราว)
+*.log
+error_log
+php_errors.log
+/logs/
+/tmp/
+/temp/
+/cache/
+
+# 4. Database Backups & Dumps (ไฟล์ Backup ที่อาจมีข้อมูลจริง/ข้อมูลส่วนตัว)
+# หมายเหตุ: database/database.sql ที่เป็นโครงสร้างเริ่มต้นยังคงถูกติดตามใน Git ได้ตามปกติ
+*.sql.bak
+*.dump
+*.backup
+/backups/
+database/backup/
+
+# 5. User Uploaded Content (ไฟล์ที่ผู้ใช้ upload เข้าระบบ)
+/uploads/
+/public/uploads/
+
+# 6. Operating System Files (ไฟล์ขยะของระบบปฏิบัติการ)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+desktop.ini
+
+# 7. IDE & Editor Specific Files (การตั้งค่าของโปรแกรมเขียนโค้ด)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*~

@@ -1,0 +1,61 @@
+<?php
+// =============================================
+// Navbar: แถบเมนูนำทาง
+// =============================================
+// ใช้ PHP เพื่อตรวจสอบว่าอยู่หน้าไหน แล้ว highlight เมนูนั้น
+//
+// Concept: $_SERVER['SCRIPT_NAME']
+// คือ path ของไฟล์ PHP ที่กำลังทำงานอยู่
+// เช่น ถ้าเปิด http://localhost/course-registration/pages/students.php
+// $_SERVER['SCRIPT_NAME'] จะได้ "/course-registration/pages/students.php"
+//
+// เปรียบเทียบกับ JavaScript:
+// JS:  window.location.pathname
+// PHP: $_SERVER['SCRIPT_NAME']
+//
+// basename() = ตัดเอาเฉพาะชื่อไฟล์ (ตัด path ออก)
+// เช่น basename("/course-registration/pages/students.php") = "students.php"
+// เหมือน: path.split('/').pop() ใน JS
+$currentPage = basename($_SERVER['SCRIPT_NAME']);
+?>
+<nav class="navbar">
+    <div class="navbar-container">
+        <!-- Logo / ชื่อระบบ -->
+        <a href="/course-registration/index.php" class="navbar-brand">
+            <span class="brand-icon">🎓</span>
+            <span class="brand-text">University Registration</span>
+        </a>
+
+        <!-- เมนู -->
+        <ul class="navbar-menu">
+            <li>
+                <a href="/course-registration/index.php" 
+                   class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="/course-registration/pages/students.php" 
+                   class="nav-link <?= $currentPage === 'students.php' ? 'active' : '' ?>">
+                    <span class="nav-icon">👨‍🎓</span>
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="/course-registration/pages/courses.php" 
+                   class="nav-link <?= $currentPage === 'courses.php' ? 'active' : '' ?>">
+                    <span class="nav-icon">📚</span>
+                    Courses
+                </a>
+            </li>
+            <li>
+                <a href="/course-registration/pages/enrollments.php" 
+                   class="nav-link <?= $currentPage === 'enrollments.php' ? 'active' : '' ?>">
+                    <span class="nav-icon">📝</span>
+                    Enrollments
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
