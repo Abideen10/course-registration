@@ -87,52 +87,53 @@ require_once __DIR__ . '/../includes/navbar.php';
     <!-- ตารางนักศึกษา -->
     <div class="card">
         <?php if (count($students) > 0): ?>
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>รหัสนักศึกษา</th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>อีเมล</th>
-                        <th>สาขาวิชา</th>
-                        <th>จัดการ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($students as $student): ?>
-                    <tr>
-                        <td><?= $student['id'] ?></td>
-                        <td><?= htmlspecialchars($student['student_code']) ?></td>
-                        <td><?= htmlspecialchars($student['name']) ?></td>
-                        <td><?= htmlspecialchars($student['email']) ?></td>
-                        <td><?= htmlspecialchars($student['department']) ?></td>
-                        <td>
-                            <div class="action-buttons">
-                                <!-- ปุ่ม Edit: ส่ง ?edit=id กลับมาหน้านี้เอง -->
-                                <a href="students.php?edit=<?= $student['id'] ?>" class="btn btn-warning btn-sm">
-                                    <i class="fa-solid fa-pen"></i> แก้ไข
-                                </a>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>รหัสนักศึกษา</th>
+                            <th>ชื่อ-นามสกุล</th>
+                            <th>อีเมล</th>
+                            <th>สาขาวิชา</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($students as $student): ?>
+                            <tr>
+                                <td><?= $student['id'] ?></td>
+                                <td><?= htmlspecialchars($student['student_code']) ?></td>
+                                <td><?= htmlspecialchars($student['name']) ?></td>
+                                <td><?= htmlspecialchars($student['email']) ?></td>
+                                <td><?= htmlspecialchars($student['department']) ?></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <!-- ปุ่ม Edit: ส่ง ?edit=id กลับมาหน้านี้เอง -->
+                                        <a href="students.php?edit=<?= $student['id'] ?>" class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen"></i> แก้ไข
+                                        </a>
 
-                                <!-- ปุ่ม Delete: ใช้ form POST ส่งไป student_delete.php -->
-                                <!--
+                                        <!-- ปุ่ม Delete: ใช้ form POST ส่งไป student_delete.php -->
+                                        <!--
                                     ทำไมใช้ form POST แทน link GET สำหรับ Delete?
                                     เพราะ GET ควรใช้สำหรับ "ดูข้อมูล" เท่านั้น
                                     การ "ลบข้อมูล" ควรใช้ POST เพื่อป้องกันการลบโดยไม่ตั้งใจ
                                     (เช่น bot ที่ crawl ลิงก์ทุกลิงก์ในหน้าเว็บ)
                                 -->
-                                <form method="POST" action="../actions/student_delete.php" style="display:inline;"
-                                      onsubmit="return confirmDelete('<?= htmlspecialchars($student['name'], ENT_QUOTES) ?>')">
-                                    <input type="hidden" name="id" value="<?= $student['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> ลบ</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                                        <form method="POST" action="../actions/student_delete.php" style="display:inline;"
+                                            onsubmit="return confirmDelete('<?= htmlspecialchars($student['name'], ENT_QUOTES) ?>')">
+                                            <input type="hidden" name="id" value="<?= $student['id'] ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fa-solid fa-trash-can"></i> ลบ</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
             <div class="empty-state">
                 <div class="empty-state-icon"><i class="fa-solid fa-user-graduate"></i></div>
@@ -168,23 +169,22 @@ require_once __DIR__ . '/../includes/navbar.php';
         <form method="POST" action="../actions/student_create.php">
             <div class="form-group">
                 <label for="student_code">รหัสนักศึกษา</label>
-                <input type="text" id="student_code" name="student_code" class="form-control" 
-                       placeholder="เช่น 65001" required>
+                <input type="text" id="student_code" name="student_code" class="form-control" placeholder="เช่น 65001"
+                    required>
             </div>
             <div class="form-group">
                 <label for="name">ชื่อ-นามสกุล</label>
-                <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="เช่น สมชาย ใจดี" required>
+                <input type="text" id="name" name="name" class="form-control" placeholder="เช่น สมชาย ใจดี" required>
             </div>
             <div class="form-group">
                 <label for="email">อีเมล</label>
-                <input type="email" id="email" name="email" class="form-control" 
-                       placeholder="เช่น somchai@university.ac.th" required>
+                <input type="email" id="email" name="email" class="form-control"
+                    placeholder="เช่น somchai@university.ac.th" required>
             </div>
             <div class="form-group">
                 <label for="department">สาขาวิชา</label>
-                <input type="text" id="department" name="department" class="form-control" 
-                       placeholder="เช่น วิทยาการคอมพิวเตอร์" required>
+                <input type="text" id="department" name="department" class="form-control"
+                    placeholder="เช่น วิทยาการคอมพิวเตอร์" required>
             </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
@@ -202,43 +202,43 @@ require_once __DIR__ . '/../includes/navbar.php';
     ข้อมูลเดิมจะถูกเติมใน form ให้แก้ไข
 -->
 <?php if ($editStudent): ?>
-<div id="editModal" class="modal-overlay active">
-    <div class="modal">
-        <h2 class="modal-title"><i class="fa-solid fa-user-pen"></i> แก้ไขนักศึกษา</h2>
+    <div id="editModal" class="modal-overlay active">
+        <div class="modal">
+            <h2 class="modal-title"><i class="fa-solid fa-user-pen"></i> แก้ไขนักศึกษา</h2>
 
-        <form method="POST" action="../actions/student_update.php">
-            <!--
+            <form method="POST" action="../actions/student_update.php">
+                <!--
                 input hidden: ส่ง id ไปด้วย แต่ไม่แสดงบนหน้าจอ
                 PHP ฝั่ง server จะใช้ id นี้เพื่อรู้ว่าจะแก้ไขแถวไหน
             -->
-            <input type="hidden" name="id" value="<?= $editStudent['id'] ?>">
-            <div class="form-group">
-                <label for="edit_student_code">รหัสนักศึกษา</label>
-                <input type="text" id="edit_student_code" name="student_code" class="form-control" 
-                       value="<?= htmlspecialchars($editStudent['student_code']) ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_name">ชื่อ-นามสกุล</label>
-                <input type="text" id="edit_name" name="name" class="form-control" 
-                       value="<?= htmlspecialchars($editStudent['name']) ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_email">อีเมล</label>
-                <input type="email" id="edit_email" name="email" class="form-control" 
-                       value="<?= htmlspecialchars($editStudent['email']) ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_department">สาขาวิชา</label>
-                <input type="text" id="edit_department" name="department" class="form-control" 
-                       value="<?= htmlspecialchars($editStudent['department']) ?>" required>
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
-                <a href="students.php" class="btn btn-secondary">ยกเลิก</a>
-            </div>
-        </form>
+                <input type="hidden" name="id" value="<?= $editStudent['id'] ?>">
+                <div class="form-group">
+                    <label for="edit_student_code">รหัสนักศึกษา</label>
+                    <input type="text" id="edit_student_code" name="student_code" class="form-control"
+                        value="<?= htmlspecialchars($editStudent['student_code']) ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_name">ชื่อ-นามสกุล</label>
+                    <input type="text" id="edit_name" name="name" class="form-control"
+                        value="<?= htmlspecialchars($editStudent['name']) ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_email">อีเมล</label>
+                    <input type="email" id="edit_email" name="email" class="form-control"
+                        value="<?= htmlspecialchars($editStudent['email']) ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_department">สาขาวิชา</label>
+                    <input type="text" id="edit_department" name="department" class="form-control"
+                        value="<?= htmlspecialchars($editStudent['department']) ?>" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
+                    <a href="students.php" class="btn btn-secondary">ยกเลิก</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
