@@ -44,7 +44,7 @@ require_once __DIR__ . '/includes/navbar.php';
     <!-- หัวข้อหน้า -->
     <div class="page-header">
         <h1 class="page-title">
-            <span class="page-title-icon">📊</span>
+            <span class="page-title-icon"><i class="fa-solid fa-chart-line"></i></span>
             Dashboard
         </h1>
     </div>
@@ -54,7 +54,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
         <!-- กล่องนักศึกษา (คลิกได้) -->
         <a href="pages/students.php" class="stat-card">
-            <div class="stat-icon students">👨‍🎓</div>
+            <div class="stat-icon students"><i class="fa-solid fa-user-graduate"></i></div>
             <div class="stat-info">
                 <h3>นักศึกษาทั้งหมด</h3>
                 <div class="stat-number"><?= $studentCount ?></div>
@@ -63,7 +63,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
         <!-- กล่องรายวิชา (คลิกได้) -->
         <a href="pages/courses.php" class="stat-card">
-            <div class="stat-icon courses">📚</div>
+            <div class="stat-icon courses"><i class="fa-solid fa-book"></i></div>
             <div class="stat-info">
                 <h3>รายวิชาทั้งหมด</h3>
                 <div class="stat-number"><?= $courseCount ?></div>
@@ -72,7 +72,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
         <!-- กล่องลงทะเบียน (คลิกได้) -->
         <a href="pages/enrollments.php" class="stat-card">
-            <div class="stat-icon enrollments">📝</div>
+            <div class="stat-icon enrollments"><i class="fa-solid fa-clipboard-list"></i></div>
             <div class="stat-info">
                 <h3>การลงทะเบียนทั้งหมด</h3>
                 <div class="stat-number"><?= $enrollmentCount ?></div>
@@ -84,7 +84,7 @@ require_once __DIR__ . '/includes/navbar.php';
     <!-- ตารางลงทะเบียนล่าสุด -->
     <div class="card">
         <h2 style="font-size: 1.15rem; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-            📋 การลงทะเบียนล่าสุด
+            <i class="fa-solid fa-clock-rotate-left"></i> การลงทะเบียนล่าสุด
         </h2>
 
         <?php
@@ -173,7 +173,7 @@ require_once __DIR__ . '/includes/navbar.php';
         </div>
         <?php else: ?>
             <div class="empty-state">
-                <div class="empty-state-icon">📭</div>
+                <div class="empty-state-icon"><i class="fa-solid fa-inbox"></i></div>
                 <p>ยังไม่มีข้อมูลการลงทะเบียน</p>
             </div>
         <?php endif; ?>

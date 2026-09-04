@@ -37,10 +37,10 @@ if (isset($_GET['edit'])) {
     // =============================================
     // Prepared Statement — ป้องกัน SQL Injection
     // =============================================
-    // ❌ อันตราย (SQL Injection):
+    // [อันตราย] (SQL Injection):
     // $pdo->query("SELECT * FROM students WHERE id = " . $_GET['edit']);
     //
-    // ✅ ปลอดภัย (Prepared Statement):
+    // [ปลอดภัย] (Prepared Statement):
     // prepare() = เตรียม SQL ไว้ก่อน โดยใช้ ? เป็น placeholder
     // execute() = ใส่ค่าจริงเข้าไปแทน ?
     //
@@ -67,20 +67,20 @@ require_once __DIR__ . '/../includes/navbar.php';
 
     <!-- Alert Messages -->
     <?php if ($success): ?>
-        <div class="alert alert-success">✅ <?= htmlspecialchars($success) ?></div>
+        <div class="alert alert-success"><i class="fa-solid fa-circle-check"></i> <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
     <?php if ($error): ?>
-        <div class="alert alert-danger">❌ <?= htmlspecialchars($error) ?></div>
+        <div class="alert alert-danger"><i class="fa-solid fa-circle-xmark"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">
-            <span class="page-title-icon">👨‍🎓</span>
+            <span class="page-title-icon"><i class="fa-solid fa-user-graduate"></i></span>
             Student Management
         </h1>
         <button class="btn btn-primary" onclick="openModal('studentModal')">
-            ➕ เพิ่มนักศึกษา
+            <i class="fa-solid fa-user-plus"></i> เพิ่มนักศึกษา
         </button>
     </div>
 
@@ -111,7 +111,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                             <div class="action-buttons">
                                 <!-- ปุ่ม Edit: ส่ง ?edit=id กลับมาหน้านี้เอง -->
                                 <a href="students.php?edit=<?= $student['id'] ?>" class="btn btn-warning btn-sm">
-                                    ✏️ แก้ไข
+                                    <i class="fa-solid fa-pen"></i> แก้ไข
                                 </a>
 
                                 <!-- ปุ่ม Delete: ใช้ form POST ส่งไป student_delete.php -->
@@ -124,7 +124,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                                 <form method="POST" action="../actions/student_delete.php" style="display:inline;"
                                       onsubmit="return confirmDelete('<?= htmlspecialchars($student['name'], ENT_QUOTES) ?>')">
                                     <input type="hidden" name="id" value="<?= $student['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ ลบ</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> ลบ</button>
                                 </form>
                             </div>
                         </td>
@@ -135,7 +135,7 @@ require_once __DIR__ . '/../includes/navbar.php';
         </div>
         <?php else: ?>
             <div class="empty-state">
-                <div class="empty-state-icon">👨‍🎓</div>
+                <div class="empty-state-icon"><i class="fa-solid fa-user-graduate"></i></div>
                 <p>ยังไม่มีข้อมูลนักศึกษา กดปุ่ม "เพิ่มนักศึกษา" เพื่อเริ่มต้น</p>
             </div>
         <?php endif; ?>
@@ -151,7 +151,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 -->
 <div id="studentModal" class="modal-overlay">
     <div class="modal">
-        <h2 class="modal-title">➕ เพิ่มนักศึกษาใหม่</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-user-plus"></i> เพิ่มนักศึกษาใหม่</h2>
 
         <!--
             HTML Form: ส่งข้อมูลไป PHP
@@ -187,7 +187,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                        placeholder="เช่น วิทยาการคอมพิวเตอร์" required>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 บันทึก</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('studentModal')">ยกเลิก</button>
             </div>
         </form>
@@ -204,7 +204,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 <?php if ($editStudent): ?>
 <div id="editModal" class="modal-overlay active">
     <div class="modal">
-        <h2 class="modal-title">✏️ แก้ไขนักศึกษา</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-user-pen"></i> แก้ไขนักศึกษา</h2>
 
         <form method="POST" action="../actions/student_update.php">
             <!--
@@ -233,7 +233,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                        value="<?= htmlspecialchars($editStudent['department']) ?>" required>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 อัพเดต</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
                 <a href="students.php" class="btn btn-secondary">ยกเลิก</a>
             </div>
         </form>

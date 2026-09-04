@@ -35,20 +35,20 @@ require_once __DIR__ . '/../includes/navbar.php';
 
     <!-- Alert Messages -->
     <?php if ($success): ?>
-        <div class="alert alert-success">✅ <?= htmlspecialchars($success) ?></div>
+        <div class="alert alert-success"><i class="fa-solid fa-circle-check"></i> <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
     <?php if ($error): ?>
-        <div class="alert alert-danger">❌ <?= htmlspecialchars($error) ?></div>
+        <div class="alert alert-danger"><i class="fa-solid fa-circle-xmark"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">
-            <span class="page-title-icon">📚</span>
+            <span class="page-title-icon"><i class="fa-solid fa-book"></i></span>
             Course Management
         </h1>
         <button class="btn btn-primary" onclick="openModal('courseModal')">
-            ➕ เพิ่มรายวิชา
+            <i class="fa-solid fa-plus"></i> เพิ่มรายวิชา
         </button>
     </div>
 
@@ -76,12 +76,12 @@ require_once __DIR__ . '/../includes/navbar.php';
                         <td>
                             <div class="action-buttons">
                                 <a href="courses.php?edit=<?= $course['id'] ?>" class="btn btn-warning btn-sm">
-                                    ✏️ แก้ไข
+                                    <i class="fa-solid fa-pen"></i> แก้ไข
                                 </a>
                                 <form method="POST" action="../actions/course_delete.php" style="display:inline;"
                                       onsubmit="return confirmDelete('<?= htmlspecialchars($course['course_name'], ENT_QUOTES) ?>')">
                                     <input type="hidden" name="id" value="<?= $course['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ ลบ</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> ลบ</button>
                                 </form>
                             </div>
                         </td>
@@ -92,7 +92,7 @@ require_once __DIR__ . '/../includes/navbar.php';
         </div>
         <?php else: ?>
             <div class="empty-state">
-                <div class="empty-state-icon">📚</div>
+                <div class="empty-state-icon"><i class="fa-solid fa-book-open"></i></div>
                 <p>ยังไม่มีข้อมูลรายวิชา กดปุ่ม "เพิ่มรายวิชา" เพื่อเริ่มต้น</p>
             </div>
         <?php endif; ?>
@@ -104,7 +104,7 @@ require_once __DIR__ . '/../includes/navbar.php';
      ============================================= -->
 <div id="courseModal" class="modal-overlay">
     <div class="modal">
-        <h2 class="modal-title">➕ เพิ่มรายวิชาใหม่</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-plus"></i> เพิ่มรายวิชาใหม่</h2>
         <form method="POST" action="../actions/course_create.php">
             <div class="form-group">
                 <label for="course_code">รหัสวิชา</label>
@@ -134,7 +134,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                        placeholder="เช่น ผศ.ดร.สมศักดิ์" required>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 บันทึก</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('courseModal')">ยกเลิก</button>
             </div>
         </form>
@@ -147,7 +147,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 <?php if ($editCourse): ?>
 <div id="editCourseModal" class="modal-overlay active">
     <div class="modal">
-        <h2 class="modal-title">✏️ แก้ไขรายวิชา</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรายวิชา</h2>
         <form method="POST" action="../actions/course_update.php">
             <input type="hidden" name="id" value="<?= $editCourse['id'] ?>">
             <div class="form-group">
@@ -171,7 +171,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                        value="<?= htmlspecialchars($editCourse['teacher']) ?>" required>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 อัพเดต</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
                 <a href="courses.php" class="btn btn-secondary">ยกเลิก</a>
             </div>
         </form>

@@ -83,20 +83,20 @@ require_once __DIR__ . '/../includes/navbar.php';
 
     <!-- Alert Messages -->
     <?php if ($success): ?>
-        <div class="alert alert-success">✅ <?= htmlspecialchars($success) ?></div>
+        <div class="alert alert-success"><i class="fa-solid fa-circle-check"></i> <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
     <?php if ($error): ?>
-        <div class="alert alert-danger">❌ <?= htmlspecialchars($error) ?></div>
+        <div class="alert alert-danger"><i class="fa-solid fa-circle-xmark"></i> <?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
     <!-- Page Header -->
     <div class="page-header">
         <h1 class="page-title">
-            <span class="page-title-icon">📝</span>
+            <span class="page-title-icon"><i class="fa-solid fa-clipboard-list"></i></span>
             Enrollment Management
         </h1>
         <button class="btn btn-primary" onclick="openModal('enrollmentModal')">
-            ➕ ลงทะเบียนเรียน
+            <i class="fa-solid fa-plus"></i> ลงทะเบียนเรียน
         </button>
     </div>
 
@@ -147,12 +147,12 @@ require_once __DIR__ . '/../includes/navbar.php';
                         <td>
                             <div class="action-buttons">
                                 <a href="enrollments.php?edit=<?= $enrollment['id'] ?>" class="btn btn-warning btn-sm">
-                                    ✏️ แก้ไข
+                                    <i class="fa-solid fa-pen"></i> แก้ไข
                                 </a>
                                 <form method="POST" action="../actions/enrollment_delete.php" style="display:inline;"
                                       onsubmit="return confirmDelete('<?= htmlspecialchars($enrollment['student_name'] . ' - ' . $enrollment['course_name'], ENT_QUOTES) ?>')">
                                     <input type="hidden" name="id" value="<?= $enrollment['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">🗑️ ยกเลิก</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> ยกเลิก</button>
                                 </form>
                             </div>
                         </td>
@@ -163,7 +163,7 @@ require_once __DIR__ . '/../includes/navbar.php';
         </div>
         <?php else: ?>
             <div class="empty-state">
-                <div class="empty-state-icon">📝</div>
+                <div class="empty-state-icon"><i class="fa-solid fa-clipboard-list"></i></div>
                 <p>ยังไม่มีข้อมูลการลงทะเบียน กดปุ่ม "ลงทะเบียนเรียน" เพื่อเริ่มต้น</p>
             </div>
         <?php endif; ?>
@@ -175,7 +175,7 @@ require_once __DIR__ . '/../includes/navbar.php';
      ============================================= -->
 <div id="enrollmentModal" class="modal-overlay">
     <div class="modal">
-        <h2 class="modal-title">➕ ลงทะเบียนเรียน</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-plus"></i> ลงทะเบียนเรียน</h2>
         <form method="POST" action="../actions/enrollment_create.php">
 
             <!-- Dropdown เลือกนักศึกษา -->
@@ -231,7 +231,7 @@ require_once __DIR__ . '/../includes/navbar.php';
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 ลงทะเบียน</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> ลงทะเบียน</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('enrollmentModal')">ยกเลิก</button>
             </div>
         </form>
@@ -258,7 +258,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     ?>
 <div id="editEnrollmentModal" class="modal-overlay active">
     <div class="modal">
-        <h2 class="modal-title">✏️ แก้ไขเกรด</h2>
+        <h2 class="modal-title"><i class="fa-solid fa-pen-to-square"></i> แก้ไขเกรด</h2>
         <form method="POST" action="../actions/enrollment_update.php">
             <input type="hidden" name="id" value="<?= $editEnrollment['id'] ?>">
 
@@ -303,7 +303,7 @@ require_once __DIR__ . '/../includes/navbar.php';
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-success">💾 อัพเดต</button>
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
                 <a href="enrollments.php" class="btn btn-secondary">ยกเลิก</a>
             </div>
         </form>

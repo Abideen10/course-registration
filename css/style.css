@@ -105,6 +105,7 @@ a {
 
 .brand-icon {
     font-size: 1.5rem;
+    color: var(--color-primary-light);
 }
 
 .brand-text {
@@ -171,6 +172,7 @@ a {
 
 .page-title-icon {
     font-size: 2rem;
+    color: var(--color-primary-light);
 }
 
 /* =============================================
