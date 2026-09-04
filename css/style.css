@@ -208,7 +208,7 @@ a {
     align-items: center;
     gap: 20px;
     transition: var(--transition);
-    cursor: default;
+    cursor: pointer;
 }
 
 .stat-card:hover {
@@ -530,12 +530,35 @@ select.form-control {
     font-weight: 600;
 }
 
-.grade-a { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-.grade-b { background: rgba(14, 165, 233, 0.15); color: #38bdf8; }
-.grade-c { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-.grade-d { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
-.grade-f { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-.grade-none { background: rgba(100, 116, 139, 0.15); color: #94a3b8; }
+.grade-a {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+}
+
+.grade-b {
+    background: rgba(14, 165, 233, 0.15);
+    color: #38bdf8;
+}
+
+.grade-c {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+}
+
+.grade-d {
+    background: rgba(249, 115, 22, 0.15);
+    color: #fb923c;
+}
+
+.grade-f {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+}
+
+.grade-none {
+    background: rgba(100, 116, 139, 0.15);
+    color: #94a3b8;
+}
 
 /* =============================================
    Animations
@@ -545,6 +568,7 @@ select.form-control {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -556,6 +580,7 @@ select.form-control {
         opacity: 0;
         transform: scale(0.95) translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
