@@ -56,7 +56,7 @@ if (isset($_GET['edit'])) {
 // =============================================
 // ดึงข้อมูลนักศึกษาทั้งหมด
 // =============================================
-$stmt = $pdo->query("SELECT * FROM students ORDER BY id DESC");
+$stmt = $pdo->query("SELECT * FROM students ORDER BY id ASC");
 $students = $stmt->fetchAll();
 
 require_once __DIR__ . '/../includes/header.php';
@@ -65,7 +65,8 @@ require_once __DIR__ . '/../includes/navbar.php';
 
 <div class="main-content">
 
-    <!-- Alert Messages -->
+    <!-- Alert Messages (ถ้า $success ไม่ใช่ค่า null ให้ทำใน if success// ถ้า $error ไม่ใช่ค่า null ให้ทำใน if error)-->
+    <!-- รับค่าจากบรรทัดที่ 27/28 เพื่อแสดง alert -->
     <?php if ($success): ?>
         <div class="alert alert-success"><i class="fa-solid fa-circle-check"></i> <?= htmlspecialchars($success) ?></div>
     <?php endif; ?>
