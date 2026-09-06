@@ -69,6 +69,13 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
                     Course Summary
                 </a>
             </li>
+            <li>
+                <a href="/course-registration/pages/student_search.php"
+                    class="nav-link <?= $currentPage === 'student_search.php' ? 'active' : '' ?>">
+                    <span class="nav-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    Search
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
