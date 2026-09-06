@@ -62,6 +62,13 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
                     Transcript
                 </a>
             </li>
+            <li>
+                <a href="/course-registration/pages/course_summary.php"
+                    class="nav-link <?= $currentPage === 'course_summary.php' ? 'active' : '' ?>">
+                    <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                    Course Summary
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

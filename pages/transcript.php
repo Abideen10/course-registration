@@ -14,6 +14,7 @@ $sql = $pdo->query("
     FROM students s
     JOIN enrollments e ON s.id = e.student_id
     JOIN courses c ON c.id = e.course_id
+    ORDER BY s.student_code ASC, c.course_code ASC
 ");
 $transcripts = $sql->fetchAll();
 
