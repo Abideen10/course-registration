@@ -1,4 +1,8 @@
 <?php
+// ตรวจสอบสิทธิ์: ต้อง login ก่อน
+require_once __DIR__ . '/../includes/auth.php';
+requireLogin();
+
 require_once __DIR__ . '/../config/database.php';
 
 // 🎯 เขียน SQL ของคุณตรงนี้ (ใช้ LEFT JOIN, COUNT, GROUP BY)

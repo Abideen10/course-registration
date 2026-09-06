@@ -7,6 +7,11 @@
 // 2. Form ใช้ <select> dropdown แทน <input> text
 // 3. Edit แก้ไขเฉพาะ grade
 
+// ตรวจสอบสิทธิ์: ต้อง login ก่อน
+require_once __DIR__ . '/../includes/auth.php';
+requireLogin();
+
+
 require_once __DIR__ . '/../config/database.php';
 
 $success = $_GET['success'] ?? '';

@@ -9,6 +9,11 @@
 // 4. ดึงข้อมูลทั้งหมด
 // 5. แสดง HTML (ตาราง + Modal)
 
+// ตรวจสอบสิทธิ์: ต้อง login ก่อน
+require_once __DIR__ . '/../includes/auth.php';
+requireLogin();
+
+
 require_once __DIR__ . '/../config/database.php';
 
 // รับข้อความ success/error

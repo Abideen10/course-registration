@@ -6,6 +6,11 @@
 // 1. แสดงรายชื่อนักศึกษาทั้งหมด
 // 2. แสดง Modal Form สำหรับเพิ่ม/แก้ไขนักศึกษา
 
+// ตรวจสอบสิทธิ์: เฉพาะ Admin เท่านั้น
+require_once __DIR__ . '/../includes/auth.php';
+requireAdmin();
+
+
 require_once __DIR__ . '/../config/database.php';
 
 // =============================================

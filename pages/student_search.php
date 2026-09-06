@@ -3,6 +3,10 @@
 // student_search.php — ค้นหาข้อมูลนักศึกษา (Search)
 // =============================================
 
+// ตรวจสอบสิทธิ์: ต้อง login ก่อน
+require_once __DIR__ . '/../includes/auth.php';
+requireLogin();
+
 require_once __DIR__ . '/../config/database.php';
 
 // 1. รับค่าคำค้นหาจาก URL ผ่าน $_GET

@@ -3,6 +3,10 @@
 // index.php — Dashboard (หน้าแรก)
 // =============================================
 
+// ตรวจสอบสิทธิ์: ต้อง login ก่อนเข้าหน้านี้
+require_once __DIR__ . '/includes/auth.php';
+requireLogin();
+
 // เชื่อมต่อ Database
 // require_once = นำเข้าไฟล์อื่นเข้ามา (เหมือน import ใน JS)
 // __DIR__ = path ของไฟล์นี้ (เหมือน __dirname ใน Node.js)

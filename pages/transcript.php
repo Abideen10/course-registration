@@ -1,5 +1,9 @@
 <?php
 
+// ตรวจสอบสิทธิ์: ต้อง login ก่อน
+require_once __DIR__ . '/../includes/auth.php';
+requireLogin();
+
 require_once __DIR__ . '/../config/database.php';
 
 $sql = $pdo->query("

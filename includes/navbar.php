@@ -17,6 +17,10 @@
 // เช่น basename("/course-registration/pages/students.php") = "students.php"
 // เหมือน: path.split('/').pop() ใน JS
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
+
+// ดึงข้อมูล user ปัจจุบัน (ถ้า login แล้ว)
+require_once __DIR__ . '/auth.php';
+$currentUser = getCurrentUser();
 ?>
 <nav class="navbar">
     <div class="navbar-container">
@@ -35,6 +39,9 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
                     Dashboard
                 </a>
             </li>
+
+            <?php if (isAdmin()): ?>
+            <!-- เมนูจัดการนักศึกษา (Admin เท่านั้น) -->
             <li>
                 <a href="/course-registration/pages/students.php"
                     class="nav-link <?= $currentPage === 'students.php' ? 'active' : '' ?>">
@@ -42,6 +49,8 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
                     Students
                 </a>
             </li>
+            <?php endif; ?>
+
             <li>
                 <a href="/course-registration/pages/courses.php"
                     class="nav-link <?= $currentPage === 'courses.php' ? 'active' : '' ?>">
@@ -77,5 +86,20 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
                 </a>
             </li>
         </ul>
+
+        <!-- User Info & Logout -->
+        <?php if ($currentUser): ?>
+        <div class="navbar-user">
+            <div class="user-info">
+                <span class="user-name"><?= htmlspecialchars($currentUser['username']) ?></span>
+                <span class="user-role-badge role-<?= $currentUser['role'] ?>">
+                    <?= $currentUser['role'] === 'admin' ? 'Admin' : 'Student' ?>
+                </span>
+            </div>
+            <a href="/course-registration/actions/auth_logout.php" class="btn-logout" title="ออกจากระบบ">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+        <?php endif; ?>
     </div>
 </nav>
