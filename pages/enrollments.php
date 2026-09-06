@@ -22,7 +22,7 @@ $error = $_GET['error'] ?? '';
 // =============================================
 // ดึงรายชื่อนักศึกษาทั้งหมด -> ใช้ใน <select> เลือกนักศึกษา
 // ดึงรายวิชาทั้งหมด -> ใช้ใน <select> เลือกรายวิชา
-$allStudents = $pdo->query("SELECT * FROM students ORDER BY student_code")->fetchAll();
+$allStudents = $pdo->query("SELECT * FROM users ORDER BY student_code")->fetchAll();
 $allCourses = $pdo->query("SELECT * FROM courses ORDER BY course_code")->fetchAll();
 
 // =============================================
@@ -65,16 +65,16 @@ if (isset($_GET['edit'])) {
 $stmt = $pdo->query("
     SELECT 
         e.id,
-        e.student_id,
+        e.user_id,
         e.course_id,
         e.enrollment_date,
         e.grade,
-        s.student_code,
-        s.name AS student_name,
+        u.student_code,
+        u.name AS student_name,
         c.course_code,
         c.course_name
     FROM enrollments e
-    JOIN students s ON e.student_id = s.id
+    JOIN users u ON e.user_id = u.id
     JOIN courses c ON e.course_id = c.id
     ORDER BY e.id DESC
 ");
@@ -108,64 +108,70 @@ require_once __DIR__ . '/../includes/navbar.php';
     <!-- ตารางลงทะเบียน -->
     <div class="card">
         <?php if (count($enrollments) > 0): ?>
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>นักศึกษา</th>
-                        <th>รายวิชา</th>
-                        <th>วันที่ลงทะเบียน</th>
-                        <th>เกรด</th>
-                        <th>จัดการ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($enrollments as $enrollment): ?>
-                    <tr>
-                        <td>
-                            <?= htmlspecialchars($enrollment['student_code']) ?> -
-                            <?= htmlspecialchars($enrollment['student_name']) ?>
-                        </td>
-                        <td>
-                            <?= htmlspecialchars($enrollment['course_code']) ?> -
-                            <?= htmlspecialchars($enrollment['course_name']) ?>
-                        </td>
-                        <td><?= htmlspecialchars($enrollment['enrollment_date']) ?></td>
-                        <td>
-                            <?php if ($enrollment['grade']): ?>
-                                <?php
-                                $gradeClass = 'grade-none';
-                                $firstChar = strtolower(substr($enrollment['grade'], 0, 1));
-                                if ($firstChar === 'a') $gradeClass = 'grade-a';
-                                elseif ($firstChar === 'b') $gradeClass = 'grade-b';
-                                elseif ($firstChar === 'c') $gradeClass = 'grade-c';
-                                elseif ($firstChar === 'd') $gradeClass = 'grade-d';
-                                elseif ($firstChar === 'f') $gradeClass = 'grade-f';
-                                ?>
-                                <span class="grade-badge <?= $gradeClass ?>">
-                                    <?= htmlspecialchars($enrollment['grade']) ?>
-                                </span>
-                            <?php else: ?>
-                                <span class="grade-badge grade-none">ยังไม่มี</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <div class="action-buttons">
-                                <a href="enrollments.php?edit=<?= $enrollment['id'] ?>" class="btn btn-warning btn-sm">
-                                    <i class="fa-solid fa-pen"></i> แก้ไข
-                                </a>
-                                <form method="POST" action="../actions/enrollment_delete.php" style="display:inline;"
-                                      onsubmit="return confirmDelete('<?= htmlspecialchars($enrollment['student_name'] . ' - ' . $enrollment['course_name'], ENT_QUOTES) ?>')">
-                                    <input type="hidden" name="id" value="<?= $enrollment['id'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i> ยกเลิก</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>นักศึกษา</th>
+                            <th>รายวิชา</th>
+                            <th>วันที่ลงทะเบียน</th>
+                            <th>เกรด</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($enrollments as $enrollment): ?>
+                            <tr>
+                                <td>
+                                    <?= htmlspecialchars($enrollment['student_code']) ?> -
+                                    <?= htmlspecialchars($enrollment['student_name']) ?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($enrollment['course_code']) ?> -
+                                    <?= htmlspecialchars($enrollment['course_name']) ?>
+                                </td>
+                                <td><?= htmlspecialchars($enrollment['enrollment_date']) ?></td>
+                                <td>
+                                    <?php if ($enrollment['grade']): ?>
+                                        <?php
+                                        $gradeClass = 'grade-none';
+                                        $firstChar = strtolower(substr($enrollment['grade'], 0, 1));
+                                        if ($firstChar === 'a')
+                                            $gradeClass = 'grade-a';
+                                        elseif ($firstChar === 'b')
+                                            $gradeClass = 'grade-b';
+                                        elseif ($firstChar === 'c')
+                                            $gradeClass = 'grade-c';
+                                        elseif ($firstChar === 'd')
+                                            $gradeClass = 'grade-d';
+                                        elseif ($firstChar === 'f')
+                                            $gradeClass = 'grade-f';
+                                        ?>
+                                        <span class="grade-badge <?= $gradeClass ?>">
+                                            <?= htmlspecialchars($enrollment['grade']) ?>
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="grade-badge grade-none">ยังไม่มี</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="enrollments.php?edit=<?= $enrollment['id'] ?>" class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-pen"></i> แก้ไข
+                                        </a>
+                                        <form method="POST" action="../actions/enrollment_delete.php" style="display:inline;"
+                                            onsubmit="return confirmDelete('<?= htmlspecialchars($enrollment['student_name'] . ' - ' . $enrollment['course_name'], ENT_QUOTES) ?>')">
+                                            <input type="hidden" name="id" value="<?= $enrollment['id'] ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fa-solid fa-trash-can"></i> ยกเลิก</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
             <div class="empty-state">
                 <div class="empty-state-icon"><i class="fa-solid fa-clipboard-list"></i></div>
@@ -232,7 +238,7 @@ require_once __DIR__ . '/../includes/navbar.php';
             <div class="form-group">
                 <label for="enrollment_date">วันที่ลงทะเบียน</label>
                 <input type="date" id="enrollment_date" name="enrollment_date" class="form-control"
-                       value="<?= date('Y-m-d') ?>" required>
+                    value="<?= date('Y-m-d') ?>" required>
             </div>
 
             <div class="form-actions">
@@ -261,26 +267,26 @@ require_once __DIR__ . '/../includes/navbar.php';
     $stmtCourse->execute([$editEnrollment['course_id']]);
     $enrollCourse = $stmtCourse->fetch();
     ?>
-<div id="editEnrollmentModal" class="modal-overlay active">
-    <div class="modal">
-        <h2 class="modal-title"><i class="fa-solid fa-pen-to-square"></i> แก้ไขเกรด</h2>
-        <form method="POST" action="../actions/enrollment_update.php">
-            <input type="hidden" name="id" value="<?= $editEnrollment['id'] ?>">
+    <div id="editEnrollmentModal" class="modal-overlay active">
+        <div class="modal">
+            <h2 class="modal-title"><i class="fa-solid fa-pen-to-square"></i> แก้ไขเกรด</h2>
+            <form method="POST" action="../actions/enrollment_update.php">
+                <input type="hidden" name="id" value="<?= $editEnrollment['id'] ?>">
 
-            <!-- แสดงข้อมูลให้ดู (ไม่สามารถแก้ไข) -->
-            <div class="form-group">
-                <label>นักศึกษา</label>
-                <input type="text" class="form-control" disabled
-                       value="<?= htmlspecialchars($enrollStudent['student_code'] . ' - ' . $enrollStudent['name']) ?>">
-            </div>
-            <div class="form-group">
-                <label>รายวิชา</label>
-                <input type="text" class="form-control" disabled
-                       value="<?= htmlspecialchars($enrollCourse['course_code'] . ' - ' . $enrollCourse['course_name']) ?>">
-            </div>
+                <!-- แสดงข้อมูลให้ดู (ไม่สามารถแก้ไข) -->
+                <div class="form-group">
+                    <label>นักศึกษา</label>
+                    <input type="text" class="form-control" disabled
+                        value="<?= htmlspecialchars($enrollStudent['student_code'] . ' - ' . $enrollStudent['name']) ?>">
+                </div>
+                <div class="form-group">
+                    <label>รายวิชา</label>
+                    <input type="text" class="form-control" disabled
+                        value="<?= htmlspecialchars($enrollCourse['course_code'] . ' - ' . $enrollCourse['course_name']) ?>">
+                </div>
 
-            <!-- แก้ไข Grade -->
-            <!--
+                <!-- แก้ไข Grade -->
+                <!--
                 <select> สำหรับเลือกเกรด
                 
                 Concept ใหม่: selected attribute
@@ -292,28 +298,28 @@ require_once __DIR__ . '/../includes/navbar.php';
                 === ใน PHP ทำงานเหมือน === ใน JavaScript เลย
                 (เปรียบเทียบทั้งค่าและชนิดข้อมูล)
             -->
-            <div class="form-group">
-                <label for="edit_grade">เกรด</label>
-                <select id="edit_grade" name="grade" class="form-control">
-                    <option value="" <?= $editEnrollment['grade'] === null ? 'selected' : '' ?>>ยังไม่มี</option>
-                    <option value="A" <?= $editEnrollment['grade'] === 'A' ? 'selected' : '' ?>>A</option>
-                    <option value="B+" <?= $editEnrollment['grade'] === 'B+' ? 'selected' : '' ?>>B+</option>
-                    <option value="B" <?= $editEnrollment['grade'] === 'B' ? 'selected' : '' ?>>B</option>
-                    <option value="C+" <?= $editEnrollment['grade'] === 'C+' ? 'selected' : '' ?>>C+</option>
-                    <option value="C" <?= $editEnrollment['grade'] === 'C' ? 'selected' : '' ?>>C</option>
-                    <option value="D+" <?= $editEnrollment['grade'] === 'D+' ? 'selected' : '' ?>>D+</option>
-                    <option value="D" <?= $editEnrollment['grade'] === 'D' ? 'selected' : '' ?>>D</option>
-                    <option value="F" <?= $editEnrollment['grade'] === 'F' ? 'selected' : '' ?>>F</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="edit_grade">เกรด</label>
+                    <select id="edit_grade" name="grade" class="form-control">
+                        <option value="" <?= $editEnrollment['grade'] === null ? 'selected' : '' ?>>ยังไม่มี</option>
+                        <option value="A" <?= $editEnrollment['grade'] === 'A' ? 'selected' : '' ?>>A</option>
+                        <option value="B+" <?= $editEnrollment['grade'] === 'B+' ? 'selected' : '' ?>>B+</option>
+                        <option value="B" <?= $editEnrollment['grade'] === 'B' ? 'selected' : '' ?>>B</option>
+                        <option value="C+" <?= $editEnrollment['grade'] === 'C+' ? 'selected' : '' ?>>C+</option>
+                        <option value="C" <?= $editEnrollment['grade'] === 'C' ? 'selected' : '' ?>>C</option>
+                        <option value="D+" <?= $editEnrollment['grade'] === 'D+' ? 'selected' : '' ?>>D+</option>
+                        <option value="D" <?= $editEnrollment['grade'] === 'D' ? 'selected' : '' ?>>D</option>
+                        <option value="F" <?= $editEnrollment['grade'] === 'F' ? 'selected' : '' ?>>F</option>
+                    </select>
+                </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
-                <a href="enrollments.php" class="btn btn-secondary">ยกเลิก</a>
-            </div>
-        </form>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> อัพเดต</button>
+                    <a href="enrollments.php" class="btn btn-secondary">ยกเลิก</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

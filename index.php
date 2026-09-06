@@ -26,7 +26,7 @@ require_once __DIR__ . '/config/database.php';
 // PHP สั้นกว่า:
 // $count = $pdo->query('SELECT COUNT(*)...')->fetchColumn();
 
-$studentCount = $pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
+$studentCount = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 $courseCount = $pdo->query("SELECT COUNT(*) FROM courses")->fetchColumn();
 $enrollmentCount = $pdo->query("SELECT COUNT(*) FROM enrollments")->fetchColumn();
 
@@ -102,9 +102,9 @@ require_once __DIR__ . '/includes/navbar.php';
         // ORDER BY e.id DESC = เรียงจากใหม่สุดไปเก่าสุด
         // LIMIT 5 = เอาแค่ 5 รายการ
         $stmt = $pdo->query("
-            SELECT e.*, s.name AS student_name, s.student_code, c.course_code, c.course_name
+            SELECT e.*, u.name AS student_name, u.student_code, c.course_code, c.course_name
             FROM enrollments e
-            JOIN students s ON e.student_id = s.id
+            JOIN users u ON e.user_id = u.id
             JOIN courses c ON e.course_id = c.id
             ORDER BY e.id DESC
             LIMIT 5
@@ -116,7 +116,7 @@ require_once __DIR__ . '/includes/navbar.php';
         ?>
 
         <?php if (count($recentEnrollments) > 0): ?>
-        <!--
+            <!--
             count() ใน PHP = .length ใน JavaScript
             if (count($arr) > 0) เหมือน if (arr.length > 0)
             
@@ -124,19 +124,19 @@ require_once __DIR__ . '/includes/navbar.php';
             นี่คือ "alternative syntax" ของ PHP สำหรับผสมกับ HTML
             อ่านง่ายกว่า if (...) { } เมื่อมี HTML อยู่ระหว่างกลาง
         -->
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>นักศึกษา</th>
-                        <th>รายวิชา</th>
-                        <th>วันที่ลงทะเบียน</th>
-                        <th>เกรด</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($recentEnrollments as $row): ?>
-                    <!--
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>นักศึกษา</th>
+                            <th>รายวิชา</th>
+                            <th>วันที่ลงทะเบียน</th>
+                            <th>เกรด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($recentEnrollments as $row): ?>
+                            <!--
                         foreach ใน PHP เหมือน for...of ใน JavaScript:
                         JS:  for (const row of recentEnrollments) { }
                         PHP: foreach ($recentEnrollments as $row):
@@ -144,37 +144,42 @@ require_once __DIR__ . '/includes/navbar.php';
                         แต่ละ $row เป็น associative array (คล้าย Object ใน JS)
                         $row['student_name'] เหมือน row.student_name ใน JS
                     -->
-                    <tr>
-                        <td><?= htmlspecialchars($row['student_code'] . ' - ' . $row['student_name']) ?></td>
-                        <td><?= htmlspecialchars($row['course_code'] . ' - ' . $row['course_name']) ?></td>
-                        <td><?= htmlspecialchars($row['enrollment_date']) ?></td>
-                        <td>
-                            <?php if ($row['grade']): ?>
-                                <?php
-                                // =============================================
-                                // กำหนดสีของ grade badge
-                                // =============================================
-                                // strtolower() = แปลงเป็นตัวพิมพ์เล็ก
-                                // substr() = ตัดตัวอักษร (เอาตัวแรก)
-                                // เหมือน: str.toLowerCase() และ str.charAt(0) ใน JS
-                                $gradeClass = 'grade-none';
-                                $firstChar = strtolower(substr($row['grade'], 0, 1));
-                                if ($firstChar === 'a') $gradeClass = 'grade-a';
-                                elseif ($firstChar === 'b') $gradeClass = 'grade-b';
-                                elseif ($firstChar === 'c') $gradeClass = 'grade-c';
-                                elseif ($firstChar === 'd') $gradeClass = 'grade-d';
-                                elseif ($firstChar === 'f') $gradeClass = 'grade-f';
-                                ?>
-                                <span class="grade-badge <?= $gradeClass ?>"><?= htmlspecialchars($row['grade']) ?></span>
-                            <?php else: ?>
-                                <span class="grade-badge grade-none">ยังไม่มี</span>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                            <tr>
+                                <td><?= htmlspecialchars($row['student_code'] . ' - ' . $row['student_name']) ?></td>
+                                <td><?= htmlspecialchars($row['course_code'] . ' - ' . $row['course_name']) ?></td>
+                                <td><?= htmlspecialchars($row['enrollment_date']) ?></td>
+                                <td>
+                                    <?php if ($row['grade']): ?>
+                                        <?php
+                                        // =============================================
+                                        // กำหนดสีของ grade badge
+                                        // =============================================
+                                        // strtolower() = แปลงเป็นตัวพิมพ์เล็ก
+                                        // substr() = ตัดตัวอักษร (เอาตัวแรก)
+                                        // เหมือน: str.toLowerCase() และ str.charAt(0) ใน JS
+                                        $gradeClass = 'grade-none';
+                                        $firstChar = strtolower(substr($row['grade'], 0, 1));
+                                        if ($firstChar === 'a')
+                                            $gradeClass = 'grade-a';
+                                        elseif ($firstChar === 'b')
+                                            $gradeClass = 'grade-b';
+                                        elseif ($firstChar === 'c')
+                                            $gradeClass = 'grade-c';
+                                        elseif ($firstChar === 'd')
+                                            $gradeClass = 'grade-d';
+                                        elseif ($firstChar === 'f')
+                                            $gradeClass = 'grade-f';
+                                        ?>
+                                        <span class="grade-badge <?= $gradeClass ?>"><?= htmlspecialchars($row['grade']) ?></span>
+                                    <?php else: ?>
+                                        <span class="grade-badge grade-none">ยังไม่มี</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
             <div class="empty-state">
                 <div class="empty-state-icon"><i class="fa-solid fa-inbox"></i></div>

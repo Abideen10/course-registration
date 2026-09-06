@@ -73,10 +73,10 @@ if (!$user || !password_verify($password, $user['password'])) {
 // =============================================
 // เก็บข้อมูล user ลง $_SESSION
 // ข้อมูลนี้จะอยู่ตลอดจนกว่าจะ logout หรือปิด browser
-$_SESSION['user_id']    = $user['id'];
-$_SESSION['username']   = $user['username'];
+$_SESSION['user_id'] = $user['id'];
+$_SESSION['username'] = $user['username'];
 $_SESSION['user_email'] = $user['email'];
-$_SESSION['user_role']  = $user['role'];
+$_SESSION['user_role'] = $user['role'];
 
 // Redirect ไป Dashboard
 header('Location: /course-registration/index.php');

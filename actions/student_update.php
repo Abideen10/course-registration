@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // UPDATE = แก้ไขข้อมูลที่มีอยู่แล้ว
         // WHERE id = ? = ระบุว่าจะแก้ไขแถวไหน (ถ้าไม่มี WHERE จะแก้ทุกแถว!)
-        $stmt = $pdo->prepare("UPDATE students SET student_code = ?, name = ?, email = ?, department = ? WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE users SET student_code = ?, name = ?, email = ?, department = ? WHERE id = ?");
         $stmt->execute([$student_code, $name, $email, $department, $id]);
 
         header('Location: ../pages/students.php?success=' . urlencode('แก้ไขข้อมูลนักศึกษาสำเร็จ'));

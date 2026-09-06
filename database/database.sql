@@ -8,22 +8,25 @@ CREATE DATABASE IF NOT EXISTS course_registration
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_general_ci;
 
--- เลือกใช้ Database นี้
 USE course_registration;
 
 -- =============================================
--- Table: students (ตารางนักศึกษา)
+-- 1. Table: users (รวมข้อมูลผู้ใช้และนักศึกษาไว้ด้วยกัน)
 -- =============================================
-CREATE TABLE IF NOT EXISTS students (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_code VARCHAR(20) NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    department VARCHAR(100) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    student_code VARCHAR(20) UNIQUE DEFAULT NULL,
+    department VARCHAR(100) DEFAULT NULL,
+    role ENUM('admin', 'student') NOT NULL DEFAULT 'student',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- =============================================
--- Table: courses (ตารางรายวิชา)
+-- 2. Table: courses (ตารางรายวิชา)
 -- =============================================
 CREATE TABLE IF NOT EXISTS courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,44 +37,16 @@ CREATE TABLE IF NOT EXISTS courses (
 );
 
 -- =============================================
--- Table: enrollments (ตารางลงทะเบียนเรียน)
+-- 3. Table: enrollments (ตารางการลงทะเบียนเรียน)
 -- =============================================
--- enrollments เชื่อมระหว่าง students กับ courses
--- student_id -> อ้างอิงไปที่ students.id
--- course_id  -> อ้างอิงไปที่ courses.id
 CREATE TABLE IF NOT EXISTS enrollments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT NOT NULL,
+    user_id INT NOT NULL,
     course_id INT NOT NULL,
     enrollment_date DATE NOT NULL,
     grade VARCHAR(2) DEFAULT NULL,
 
-    -- Foreign Key: ถ้า student ถูกลบ -> enrollment ของคนนั้นจะถูกลบด้วย
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
-
-    -- Foreign Key: ถ้า course ถูกลบ -> enrollment ของวิชานั้นจะถูกลบด้วย
+    -- Foreign Key: ลบ user หรือ course จะลบการลงทะเบียนนั้นด้วย
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
 );
-
--- =============================================
--- Sample Data: ข้อมูลตัวอย่าง
--- =============================================
-
--- นักศึกษาตัวอย่าง
-INSERT INTO students (student_code, name, email, department) VALUES
-('65001', 'สมชาย ใจดี', 'somchai@university.ac.th', 'วิทยาการคอมพิวเตอร์'),
-('65002', 'สมหญิง รักเรียน', 'somying@university.ac.th', 'เทคโนโลยีสารสนเทศ'),
-('65003', 'วิชัย เก่งมาก', 'wichai@university.ac.th', 'วิศวกรรมซอฟต์แวร์');
-
--- รายวิชาตัวอย่าง
-INSERT INTO courses (course_code, course_name, credits, teacher) VALUES
-('CS101', 'การเขียนโปรแกรมเบื้องต้น', 3, 'ผศ.ดร.สมศักดิ์'),
-('CS102', 'โครงสร้างข้อมูล', 3, 'อ.วิภาวดี'),
-('IT201', 'ฐานข้อมูลเบื้องต้น', 3, 'รศ.ดร.ประภาส');
-
--- ลงทะเบียนตัวอย่าง
-INSERT INTO enrollments (student_id, course_id, enrollment_date, grade) VALUES
-(1, 1, '2026-09-01', 'A'),
-(1, 2, '2026-09-01', 'B+'),
-(2, 1, '2026-09-02', NULL),
-(3, 3, '2026-09-02', NULL);

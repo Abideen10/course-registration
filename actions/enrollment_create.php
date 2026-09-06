@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ถ้า > 0 แสดงว่าลงทะเบียนซ้ำ
     //
     // fetchColumn() ดึงค่าคอลัมน์แรก (ในที่นี้คือ COUNT)
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM enrollments WHERE student_id = ? AND course_id = ?");
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM enrollments WHERE user_id = ? AND course_id = ?");
     $stmt->execute([$student_id, $course_id]);
     $exists = $stmt->fetchColumn();
 
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // grade ไม่ต้องใส่ตอนลงทะเบียน (จะเป็น NULL = ยังไม่มีเกรด)
-        $stmt = $pdo->prepare("INSERT INTO enrollments (student_id, course_id, enrollment_date) VALUES (?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO enrollments (user_id, course_id, enrollment_date) VALUES (?, ?, ?)");
         $stmt->execute([$student_id, $course_id, $enrollment_date]);
 
         header('Location: ../pages/enrollments.php?success=' . urlencode('ลงทะเบียนเรียนสำเร็จ'));

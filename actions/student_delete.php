@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // DELETE FROM = ลบแถวออกจากตาราง
         // WHERE id = ? = ระบุว่าจะลบแถวไหน
-        $stmt = $pdo->prepare("DELETE FROM students WHERE id = ?");
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $stmt->execute([$id]);
 
         header('Location: ../pages/students.php?success=' . urlencode('ลบนักศึกษาสำเร็จ'));

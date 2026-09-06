@@ -51,7 +51,7 @@ if (isset($_GET['edit'])) {
     //
     // เหมือนการแยก "คำสั่ง" กับ "ข้อมูล" ออกจากกัน
     // Database จะรู้ว่า ? คือ "ข้อมูล" ไม่ใช่ "คำสั่ง SQL"
-    $stmt = $pdo->prepare("SELECT * FROM students WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$_GET['edit']]);
 
     // fetch() = ดึงผลลัพธ์ 1 แถว (ต่างจาก fetchAll() ที่ดึงทั้งหมด)
@@ -61,7 +61,7 @@ if (isset($_GET['edit'])) {
 // =============================================
 // ดึงข้อมูลนักศึกษาทั้งหมด
 // =============================================
-$stmt = $pdo->query("SELECT * FROM students ORDER BY id ASC");
+$stmt = $pdo->query("SELECT * FROM users ORDER BY id ASC");
 $students = $stmt->fetchAll();
 
 require_once __DIR__ . '/../includes/header.php';

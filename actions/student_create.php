@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ถ้าผู้ใช้พิมพ์ชื่อว่า: Robert'; DROP TABLE students; --
         // แบบไม่ปลอดภัย: SQL จะถูกแทรกคำสั่งลบตาราง (SQL Injection!)
         // แบบ Prepared Statement: Database จะถือว่าทั้งหมดเป็น "ข้อมูล" ไม่ใช่ "คำสั่ง"
-        $stmt = $pdo->prepare("INSERT INTO students (student_code, name, email, department) VALUES (?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO users (student_code, name, email, department) VALUES (?, ?, ?, ?)");
         $stmt->execute([$student_code, $name, $email, $department]);
 
         header('Location: ../pages/students.php?success=' . urlencode('เพิ่มนักศึกษาสำเร็จ'));

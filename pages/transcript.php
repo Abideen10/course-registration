@@ -8,17 +8,17 @@ require_once __DIR__ . '/../config/database.php';
 
 $sql = $pdo->query("
     SELECT
-        s.student_code,
-        s.name,
+        u.student_code,
+        u.name,
         c.course_code,
         c.course_name,
         c.credits,
         c.teacher,
         e.grade
-    FROM students s
-    JOIN enrollments e ON s.id = e.student_id
+    FROM users u
+    JOIN enrollments e ON u.id = e.user_id
     JOIN courses c ON c.id = e.course_id
-    ORDER BY s.student_code ASC, c.course_code ASC
+    ORDER BY u.student_code ASC, c.course_code ASC
 ");
 $transcripts = $sql->fetchAll();
 
