@@ -29,31 +29,37 @@ $currentPage = basename($_SERVER['SCRIPT_NAME']);
         <!-- เมนู -->
         <ul class="navbar-menu">
             <li>
-                <a href="/course-registration/index.php" 
-                   class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>">
+                <a href="/course-registration/index.php"
+                    class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>">
                     <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
                     Dashboard
                 </a>
             </li>
             <li>
-                <a href="/course-registration/pages/students.php" 
-                   class="nav-link <?= $currentPage === 'students.php' ? 'active' : '' ?>">
+                <a href="/course-registration/pages/students.php"
+                    class="nav-link <?= $currentPage === 'students.php' ? 'active' : '' ?>">
                     <span class="nav-icon"><i class="fa-solid fa-user-graduate"></i></span>
                     Students
                 </a>
             </li>
             <li>
-                <a href="/course-registration/pages/courses.php" 
-                   class="nav-link <?= $currentPage === 'courses.php' ? 'active' : '' ?>">
+                <a href="/course-registration/pages/courses.php"
+                    class="nav-link <?= $currentPage === 'courses.php' ? 'active' : '' ?>">
                     <span class="nav-icon"><i class="fa-solid fa-book"></i></span>
                     Courses
                 </a>
             </li>
             <li>
-                <a href="/course-registration/pages/enrollments.php" 
-                   class="nav-link <?= $currentPage === 'enrollments.php' ? 'active' : '' ?>">
+                <a href="/course-registration/pages/enrollments.php"
+                    class="nav-link <?= $currentPage === 'enrollments.php' ? 'active' : '' ?>">
                     <span class="nav-icon"><i class="fa-solid fa-clipboard-list"></i></span>
                     Enrollments
+                </a>
+            <li>
+                <a href="/course-registration/pages/transcript.php"
+                    class="nav-link <?= $currentPage === 'transcript.php' ? 'active' : '' ?>">
+                    <span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                    Transcript
                 </a>
             </li>
         </ul>
