@@ -8,6 +8,9 @@
 // 3. บันทึกลง Database
 // 4. Redirect กลับไปหน้า students.php
 
+require_once __DIR__ . '/../includes/auth.php';
+requireAdmin();
+
 require_once __DIR__ . '/../config/database.php';
 
 // =============================================
@@ -33,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $department = trim($_POST['department']);
 
+    $username = $student_code;
+    $default_password = password_hash('123456', PASSWORD_DEFAULT);
+
     // =============================================
     // Validate ข้อมูล
     // =============================================
@@ -57,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ถ้าผู้ใช้พิมพ์ชื่อว่า: Robert'; DROP TABLE students; --
         // แบบไม่ปลอดภัย: SQL จะถูกแทรกคำสั่งลบตาราง (SQL Injection!)
         // แบบ Prepared Statement: Database จะถือว่าทั้งหมดเป็น "ข้อมูล" ไม่ใช่ "คำสั่ง"
-        $stmt = $pdo->prepare("INSERT INTO users (student_code, name, email, department) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$student_code, $name, $email, $department]);
+        $stmt = $pdo->prepare("INSERT INTO users (student_code, name, email, department, username, password, role) VALUES (?, ?, ?, ?, ?, ?,'student')");
+        $stmt->execute([$student_code, $name, $email, $department, $username, $default_password]);
 
         header('Location: ../pages/students.php?success=' . urlencode('เพิ่มนักศึกษาสำเร็จ'));
         exit;

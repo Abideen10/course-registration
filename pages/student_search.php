@@ -19,9 +19,10 @@ if ($keyword !== '') {
     // ค้นหาพร้อมกันจาก: รหัสนักศึกษา, ชื่อ-นามสกุล, หรือสาขาวิชา
     $sql = "
         SELECT * FROM users
-        WHERE student_code LIKE ? 
+        WHERE (student_code LIKE ? 
            OR name LIKE ? 
-           OR department LIKE ?
+           OR department LIKE ?)
+           AND role = 'student'
         ORDER BY student_code ASC
     ";
     $stmt = $pdo->prepare($sql);
@@ -33,7 +34,7 @@ if ($keyword !== '') {
     $students = $stmt->fetchAll();
 } else {
     // กรณีเปิดหน้าเว็บมาครั้งแรก (ยังไม่ได้กดค้นหา): แสดงรายชื่อนักศึกษาทั้งหมด
-    $stmt = $pdo->query("SELECT * FROM users ORDER BY student_code ASC");
+    $stmt = $pdo->query("SELECT * FROM users WHERE role = 'student' ORDER BY student_code ASC");
     $students = $stmt->fetchAll();
 }
 
