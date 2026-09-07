@@ -61,7 +61,7 @@ if (isset($_GET['edit'])) {
 // =============================================
 // ดึงข้อมูลนักศึกษาทั้งหมด
 // =============================================
-$stmt = $pdo->query("SELECT * FROM users ORDER BY id ASC");
+$stmt = $pdo->query("SELECT * FROM users WHERE role = 'student' ORDER BY id ASC");
 $students = $stmt->fetchAll();
 
 require_once __DIR__ . '/../includes/header.php';

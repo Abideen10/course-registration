@@ -205,7 +205,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                   endforeach;
                 </select>
             -->
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="student_id">นักศึกษา</label>
                 <select id="student_id" name="student_id" class="form-control" required>
                     <option value="">-- เลือกนักศึกษา --</option>
@@ -215,7 +215,29 @@ require_once __DIR__ . '/../includes/navbar.php';
                         </option>
                     <?php endforeach; ?>
                 </select>
-            </div>
+            </div> -->
+
+
+            <?php if (isStudent()): ?>
+                <div class="form-group">
+                    <label>นักศึกษา (ลงทะเบียนในชื่อของคุณ)</label>
+                    <input type="text" class="form-control" value="<?= htmlspecialchars($_SESSION['name']) ?>" readonly
+                        style="background-color: #f1f5f9; cursor: not-allowed;">
+                    <input type="hidden" name="student_id" value="<?= $_SESSION['user_id'] ?>">
+                </div>
+            <?php else: ?>
+                <div class="form-group">
+                    <label for="student_id">นักศึกษา</label>
+                    <select id="student_id" name="student_id" class="form-control" required>
+                        <option value="">-- เลือกนักศึกษา --</option>
+                        <?php foreach ($allStudents as $student): ?>
+                            <option value="<?= $student['id'] ?>">
+                                <?= htmlspecialchars($student['student_code'] . ' - ' . $student['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
 
             <!-- Dropdown เลือกรายวิชา -->
             <div class="form-group">
@@ -229,6 +251,8 @@ require_once __DIR__ . '/../includes/navbar.php';
                     <?php endforeach; ?>
                 </select>
             </div>
+
+
 
             <!-- วันที่ลงทะเบียน -->
             <!--
@@ -259,8 +283,8 @@ require_once __DIR__ . '/../includes/navbar.php';
 <?php if ($editEnrollment): ?>
     <?php
     // ดึงชื่อนักศึกษาและรายวิชาสำหรับแสดงใน form
-    $stmtStudent = $pdo->prepare("SELECT student_code, name FROM students WHERE id = ?");
-    $stmtStudent->execute([$editEnrollment['student_id']]);
+    $stmtStudent = $pdo->prepare("SELECT student_code, name FROM users WHERE id = ?");
+    $stmtStudent->execute([$editEnrollment['user_id']]);
     $enrollStudent = $stmtStudent->fetch();
 
     $stmtCourse = $pdo->prepare("SELECT course_code, course_name FROM courses WHERE id = ?");

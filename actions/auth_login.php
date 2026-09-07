@@ -77,6 +77,7 @@ $_SESSION['user_id'] = $user['id'];
 $_SESSION['username'] = $user['username'];
 $_SESSION['user_email'] = $user['email'];
 $_SESSION['user_role'] = $user['role'];
+$_SESSION['name'] = $user['name'];
 
 // Redirect ไป Dashboard
 header('Location: /course-registration/index.php');

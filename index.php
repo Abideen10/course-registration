@@ -41,6 +41,12 @@ $enrollmentCount = $pdo->query("SELECT COUNT(*) FROM enrollments")->fetchColumn(
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
 ?>
+<?php if (isStudent()): ?>
+    <div class="alert alert-info">
+        📢 ยินดีต้อนรับนักศึกษา! อย่าลืมตรวจสอบผลการลงทะเบียนเรียนในเทอมนี้
+    </div>
+<?php endif; ?>
+
 
 <!-- เนื้อหาของหน้า Dashboard -->
 <div class="main-content">

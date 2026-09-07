@@ -25,7 +25,8 @@ if (session_status() === PHP_SESSION_NONE) {
  * เปรียบเทียบ JS:
  * const isLoggedIn = () => !!req.session.userId;
  */
-function isLoggedIn(): bool {
+function isLoggedIn(): bool
+{
     return isset($_SESSION['user_id']);
 }
 
@@ -34,8 +35,14 @@ function isLoggedIn(): bool {
  * 
  * @return bool true ถ้าเป็น admin
  */
-function isAdmin(): bool {
+function isAdmin(): bool
+{
     return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+}
+
+function isStudent(): bool
+{
+    return isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'student';
 }
 
 /**
@@ -46,15 +53,16 @@ function isAdmin(): bool {
  * เปรียบเทียบ JS:
  * const getCurrentUser = () => req.session.user || null;
  */
-function getCurrentUser(): ?array {
+function getCurrentUser(): ?array
+{
     if (!isLoggedIn()) {
         return null;
     }
     return [
-        'id'       => $_SESSION['user_id'],
+        'id' => $_SESSION['user_id'],
         'username' => $_SESSION['username'],
-        'email'    => $_SESSION['user_email'],
-        'role'     => $_SESSION['user_role'],
+        'email' => $_SESSION['user_email'],
+        'role' => $_SESSION['user_role'],
     ];
 }
 
@@ -68,7 +76,8 @@ function getCurrentUser(): ?array {
  *     next();
  * };
  */
-function requireLogin(): void {
+function requireLogin(): void
+{
     if (!isLoggedIn()) {
         header('Location: /course-registration/pages/login.php');
         exit;
@@ -79,7 +88,8 @@ function requireLogin(): void {
  * บังคับให้เป็น admin เท่านั้น
  * ถ้าไม่ใช่ admin จะ redirect กลับหน้า dashboard
  */
-function requireAdmin(): void {
+function requireAdmin(): void
+{
     requireLogin(); // ต้อง login ก่อน
     if (!isAdmin()) {
         header('Location: /course-registration/index.php?error=ไม่มีสิทธิ์เข้าถึงหน้านี้');

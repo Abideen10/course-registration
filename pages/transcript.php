@@ -6,21 +6,43 @@ requireLogin();
 
 require_once __DIR__ . '/../config/database.php';
 
-$sql = $pdo->query("
-    SELECT
-        u.student_code,
-        u.name,
-        c.course_code,
-        c.course_name,
-        c.credits,
-        c.teacher,
-        e.grade
-    FROM users u
-    JOIN enrollments e ON u.id = e.user_id
-    JOIN courses c ON c.id = e.course_id
-    ORDER BY u.student_code ASC, c.course_code ASC
-");
+if (isStudent()) {
+    // ถ้านักศึกษาเปิดดู ให้ดึงเฉพาะผลการเรียนของตัวเอง
+    $sql = $pdo->prepare("
+        SELECT
+            u.student_code,
+            u.name,
+            c.course_code,
+            c.course_name,
+            c.credits,
+            c.teacher,
+            e.grade
+        FROM users u
+        JOIN enrollments e ON u.id = e.user_id
+        JOIN courses c ON c.id = e.course_id
+        WHERE u.id = ?
+        ORDER BY c.course_code ASC
+    ");
+    $sql->execute([$_SESSION['user_id']]);
+} else {
+    // ถ้าเป็น Admin ให้ดูผลการเรียนของนักศึกษาทุกคน
+    $sql = $pdo->query("
+        SELECT
+            u.student_code,
+            u.name,
+            c.course_code,
+            c.course_name,
+            c.credits,
+            c.teacher,
+            e.grade
+        FROM users u
+        JOIN enrollments e ON u.id = e.user_id
+        JOIN courses c ON c.id = e.course_id
+        ORDER BY u.student_code ASC, c.course_code ASC
+    ");
+}
 $transcripts = $sql->fetchAll();
+
 
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/navbar.php';
